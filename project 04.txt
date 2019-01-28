@@ -1,0 +1,140 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+class Person     //create class
+{
+public:
+    string name, dob;
+    void getdata(string name, string s1)
+    {
+        this->name = name;
+        dob = s1;
+    }
+    void putdata();
+};
+inline void Person :: putdata()
+    {
+        cout<<"Name  :  "<<name<<endl;
+        cout<<"Date of Birth : "<<dob<<endl;
+    }
+class Department
+{
+    string name;
+public :
+    Department() {}
+    Department(string name)
+    {
+        this->name=name;
+    }
+    void print()
+    {
+        cout<<"Department Name : "<<name<<endl;
+    }
+};
+class Submission_details
+{
+public:
+    string submit, solve;
+    Submission_details() {}
+    Submission_details(string x, string y)
+    {
+        submit = x;
+        solve = y;
+    }
+    void display()
+    {
+        cout<<submit<<endl;
+        cout<<solve<<endl;
+    }
+};
+class Contestant : public Person
+{
+public:
+    string ID;
+    int solved = 0;
+    Submission_details problemlist;
+    bool selected = 0;
+    void setInfo(string a,string b, string c, int solved, bool selected)
+    {
+        getdata(a,b);
+        ID = c;
+        this->solved = solved;
+        this->selected = selected;
+    }
+    void putInfo();
+    int getsolved()
+    {
+        return solved;
+    }
+    void setProblem(Submission_details s)
+    {
+        problemlist = s;
+    }
+    bool ifFinal()
+    {
+        return selected;
+    }
+    bool operator<(Contestant A)
+    {
+        return solved<A.solved;
+    }
+};
+void Contestant :: putInfo()
+{
+    putdata();
+    cout<<"Student id : "<<ID<<endl;
+    cout<<"solved  : "<<solved<<endl;
+    problemlist.display();
+}
+int main()
+{
+    Department object("Computer Science & Engineering");
+    Contestant object1[15];
+    object1[0].setInfo("Sabbir Rahman","28-06-1997", "11708015", 880, 0);
+    object1[1].setInfo("Rakib","20-07-1996", "11708020", 975, 0);
+    object1[2].setInfo("Saiful alam","18-11-1997", "11708041", 1230,1);
+    object1[3].setInfo("Jahid","22-02-1998", "11708049", 519, 0);
+    object1[4].setInfo("Rony","25-01-1999", "11708003", 150, 0);
+    object1[0].setProblem(Submission_details("Problem  1", "solution 1")) ;
+    object1[0].setProblem(Submission_details("Problem  12", "solution 12")) ;
+    object1[0].setProblem(Submission_details("Problem  3", "solution 3")) ;
+    object1[1].setProblem(Submission_details("Problem  14", "solution 14")) ;
+    object1[1].setProblem(Submission_details("Problem  6", "solution 6")) ;
+    object1[2].setProblem(Submission_details("Problem  7", "solution 7")) ;
+    object1[2].setProblem(Submission_details("Problem  8", "solution 8")) ;
+    object1[3].setProblem(Submission_details("Problem  4", "solution 4")) ;
+    object1[4].setProblem(Submission_details("Problem  10", "solution 10")) ;
+    object1[4].setProblem(Submission_details("Problem  2", "solution 2")) ;
+    int prbno[5] = {0}, n=0;
+    Contestant ob[2];
+    sort(object1, object1 + 5);
+    for(int i = 0; i < 5 && n < 2; i++)
+    {
+        if(object1[i].ifFinal()==1)
+        {
+            ob[n++] = object1[i];
+        }
+    }
+    for(int i = 0; i < 5 && n < 2; i++)
+    {
+        if(object1[i].ifFinal()==0)
+        {
+            ob[n++] = object1[i];
+        }
+    }
+    cout<<endl;
+    cout<<"Result of Contest : "<<endl;
+    cout<<"   ......."<<endl;
+    object.print();
+    cout<<endl;
+    cout<<"1st contestant : "<<endl;
+    ob[0].putInfo();
+    cout<<endl;
+    cout<<"2nd contestant : "<<endl;
+    ob[3].putInfo();
+    cout<<endl;
+    cout<<"3rd contestant : "<<endl;
+    ob[1].putInfo();
+    return 0;
+}
